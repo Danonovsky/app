@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:app/models/entry.dart';
 import 'package:app/services/api.dart';
+import 'package:app/views/entry/add_new_entry.dart';
+import 'package:app/views/wallet/add_new_wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -60,13 +62,11 @@ class _ListOfEntriesState extends State<ListOfEntriesPage> {
                     actions: [
                       TextButton(
                           onPressed: () {
-                            //
                             Navigator.of(context).pop();
                           },
                           child: const Text("Cancel")),
                       TextButton(
                           onPressed: () async {
-                            //
                             await API.deleteEntry(entries[index].id);
                             _getEntries();
                             Navigator.of(context).pop();
@@ -82,6 +82,22 @@ class _ListOfEntriesState extends State<ListOfEntriesPage> {
           subtitle: Text(entries[index].toListDescription()),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddNewEntryPage()))
+                .then((value) {
+              setState(() {
+                _getEntries();
+              });
+            });
+          },
+          child: Container(
+              child: const Icon(Icons.add, color: Colors.white),
+              decoration: const BoxDecoration(
+                  color: Colors.blue, shape: BoxShape.circle))),
     );
   }
 }
